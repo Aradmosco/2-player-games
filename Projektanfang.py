@@ -2,6 +2,7 @@ from tkinter import *
 import random
 from PIL import Image, ImageTk 
 
+
 class GUI():
     def __init__(self):
         self.fenster = Tk()
@@ -105,12 +106,46 @@ class GUI():
         self.tugofwar.attributes("-fullscreen", True)  
         self.tugofwar.configure(bg="khaki")
 
-    #def gewonnen(self, gewinner):
+    def gewonnen(self, gewinner):
+        winner_window = Toplevel(self.tictactoe)
+        winner_window.attributes("-fullscreen", True)
+        winner_window.configure(bg="khaki")
+        
+        # Define message based on winner
+        winner_message = f"{gewinner} wins!"
 
-    #def check_winner(self):
-  #      if self.board[0] == "X" and self.board[1] == "X" and self.board[2] == "X":
-   #         self.gewonnen("X")
+        # Display winner message
+        Label(winner_window, text=winner_message, font=("Comic Sans MS", 100), fg="green4", bg="khaki").pack(pady=50)
+        Button(winner_window, text="Return to Main Screen", font=("Comic Sans MS", 30),fg="green4", bg="khaki", command=lambda: self.return_to_main(winner_window)).pack(pady=20)
+    
+    def return_to_main(self, winner_window):
+        winner_window.destroy() 
+        self.tictactoe.destroy()
+        GUI()         
+        
+        
+    
+    
 
+    def check_winner(self):
+        for symbol in ["X", "O"]:
+            if self.board[0] == symbol and self.board[1] == symbol and self.board[2] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[3] == symbol and self.board[4] == symbol and self.board[5] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[6] == symbol and self.board[7] == symbol and self.board[8] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[0] == symbol and self.board[3] == symbol and self.board[6] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[1] == symbol and self.board[4] == symbol and self.board[7] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[2] == symbol and self.board[5] == symbol and self.board[8] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[0] == symbol and self.board[4] == symbol and self.board[8] == symbol:  
+                self.gewonnen(symbol)  
+            elif self.board[2] == symbol and self.board[4] == symbol and self.board[6] == symbol:  
+                self.gewonnen(symbol)  
+        
 
     def place(self, event=None):
         self.xkor = event.x
@@ -120,7 +155,7 @@ class GUI():
             if self.schongewesen1 == 0:
                 if self.dranncounter%2 == 0:
                     self.Label_o1.place(x=(self.screen_width /2 -self.screen_width /4.2), y=(self.screen_height-(self.screen_width /2)) /1.5)
-                    self.board[0] = "O"
+                    self.board[0] = "O" 
                 else:
                     self.Label_x1.place(x=(self.screen_width /2 -self.screen_width /4.2), y=(self.screen_height-(self.screen_width /2)) /1.5)
                     self.board[0] = "X"  
