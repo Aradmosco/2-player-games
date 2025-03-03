@@ -110,11 +110,7 @@ class GUI():
         winner_window = Toplevel(self.tictactoe)
         winner_window.attributes("-fullscreen", True)
         winner_window.configure(bg="khaki")
-        
-        # Define message based on winner
-        winner_message = f"{gewinner} wins!"
-
-        # Display winner message
+        winner_message = f"{gewinner} gewinnt!"
         Label(winner_window, text=winner_message, font=("Comic Sans MS", 100), fg="green4", bg="khaki").pack(pady=50)
         Button(winner_window, text="Return to Main Screen", font=("Comic Sans MS", 30),fg="green4", bg="khaki", command=lambda: self.return_to_main(winner_window)).pack(pady=20)
     
@@ -146,6 +142,16 @@ class GUI():
             elif self.board[2] == symbol and self.board[4] == symbol and self.board[6] == symbol:  
                 self.gewonnen(symbol)  
         
+    def check_draw(self):
+        if 0 not in self.board:  
+            winner_window = Toplevel(self.tictactoe)
+            winner_window.attributes("-fullscreen", True)
+            winner_window.configure(bg="khaki")
+            winner_message = f"Niemand gewinnt, gleichstand"
+            Label(winner_window, text=winner_message, font=("Comic Sans MS", 100), fg="green4", bg="khaki").pack(pady=50)
+            Button(winner_window, text="Return to Main Screen", font=("Comic Sans MS", 30),fg="green4", bg="khaki", command=lambda: self.return_to_main(winner_window)).pack(pady=20)
+            
+
 
     def place(self, event=None):
         self.xkor = event.x
@@ -243,7 +249,9 @@ class GUI():
                 self.schongewesen9 +=1
         print(self.board)
         self.check_winner()
+        self.check_draw()
 
 if __name__ == "__main__":
     GUI()
+    
     
