@@ -10,56 +10,63 @@ class TugOfWarGUI:
         self.screen_height = self.fenster.winfo_screenheight()
         
         self.position =  self.screen_width/4
-        self.left_boundary = self.screen_width/8
-        self.right_boundary = self.screen_width - self.screen_width/8
-        self.step_size = self.screen_width/80
+        self.left_boundary = self.screen_width/3 - self.screen_width/4
+        self.right_boundary = self.screen_width/1.5 - self.screen_width/4
+        self.step_size = self.screen_width/100
+        
+
+        self.canvas = Canvas(self.fenster, width=self.screen_width, height=self.screen_height, bg="khaki", bd=0, highlightthickness=0)
+        self.canvas.pack()
+        self.canvas.create_line(self.screen_width // 3, 0, self.screen_width // 3, self.screen_height, fill="black", width=3)
+        self.canvas.create_line(self.screen_width * 2 // 3, 0, self.screen_width * 2 // 3, self.screen_height, fill="black", width=3)
         
         self.image_tugofwar = Image.open("tugofwar.png")
-        self.image = self.image_tugofwar.resize((int(self.screen_width/2), int(self.screen_height/2)))  # Resize if needed
-        self.photo_tugofwar = ImageTk.PhotoImage(self.image_tugofwar)
+        self.image_tugofwar_resized = self.image_tugofwar.resize((self.screen_width // 2, self.screen_height // 2))  # Resize the image to exactly half the screen size
+        self.photo_tugofwar = ImageTk.PhotoImage(self.image_tugofwar_resized)
         self.Label_tugofwar = Label(self.fenster, image=self.photo_tugofwar)
 
-        # # Load images
-        # self.image = Image.open("rope.png")  # Use a small image for the moving object
-        # self.image = self.image.resize((60, 60))  # Resize image
-        # self.image_tk = ImageTk.PhotoImage(self.image)
-
-        # Moving label (Indicator)
         self.Label_tugofwar.place(x=self.position, y=170)
 
-        # # Key bindings
-        # self.fenster.bind("a", self.move_left)
-        # self.fenster.bind("l", self.move_right)
+        
+        # Key bindings
+        self.fenster.bind("a", self.move_left)
+        self.fenster.bind("l", self.move_right)
 
         # Instructions
-        # self.info_label = Label(self.fenster, text="Press 'A' (Left) vs 'L' (Right)", font=("Arial", 14), bg="lightblue")
-        # self.info_label.pack(pady=10)
-
+        self.info_label = Label(self.fenster, text="Drücken Sie 'A' (links) vs 'L'(rechts)", font=("Arial", 14), bg="lightblue")
+        self.info_label.place(x=0,y=0)
         self.fenster.mainloop()
 
-    # def move_left(self, event):
-    #     """ Move indicator to the left when Player 1 (A) presses key """
-    #     if self.position > self.left_boundary:
-    #         self.position -= self.step_size
-    #         self.label.place(x=self.position, y=170)
-    #     else:
-    #         self.end_game("Player 1 Wins!")
+    def move_left(self, event):
+        if self.position > self.left_boundary:
+            self.position -= self.step_size
+            self.Label_tugofwar.place(x=self.position, y=170)
+        else:
+            self.gewonnen("rot")
 
-    # def move_right(self, event):
-    #     """ Move indicator to the right when Player 2 (L) presses key """
-    #     if self.position < self.right_boundary:
-    #         self.position += self.step_size
-    #         self.label.place(x=self.position, y=170)
-    #     else:
-    #         self.end_game("Player 2 Wins!")
+    def move_right(self, event):
+        if self.position < self.right_boundary:
+            self.position += self.step_size
+            self.Label_tugofwar.place(x=self.position, y=170)
+        else:
+            self.gewonnen("blau")
 
-    # def end_game(self, winner_text):
-    #     """ Display winner message and close the game """
-    #     self.info_label.config(text=winner_text, font=("Arial", 16, "bold"))
-    #     self.fenster.unbind("a")
-    #     self.fenster.unbind("l")
+    def gewonnen(self, gewinner):
+        winner_window = Toplevel(self.fenster)  # Erstellt ein neues Fenster für den Gewinner
+        winner_window.attributes("-fullscreen", True)
+        winner_window.configure(bg="khaki")
+        winner_message = f"{gewinner} gewinnt!"  # Zeigt den Gewinner an
+        Label(winner_window, text=winner_message, font=("Comic Sans MS", 100), fg="green4", bg="khaki").pack(pady=50)
+        Button(winner_window, text="Return to Main Screen", font=("Comic Sans MS", 30), fg="green4", bg="khaki", command=lambda: self.return_to_main(winner_window)).pack(pady=20)
+
+    # Setzt das Spiel zurück und kehrt zum Hauptbildschirm zurück
+    def return_to_main(self, winner_window):
+        winner_window.destroy()  # Schließt das Gewinner-Fenster
+        self.fenster.destroy()  # Schließt das Fenster
+        
 
 
 if __name__ == "__main__":
     TugOfWarGUI()
     
+
