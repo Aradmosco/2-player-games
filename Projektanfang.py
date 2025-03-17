@@ -23,7 +23,7 @@ class GUI():
 
         # Ermittelt die Bildschirmgröße
         self.screen_width = self.fenster.winfo_screenwidth()
-        self.screen_height = self.fenster.winfo_screenheight()aadd
+        self.screen_height = self.fenster.winfo_screenheight()
         self.font_title = int(self.screen_width // 9.72)  # Berechnet die Schriftgröße für den Titel
 
         # Lädt und skaliert Bilder
@@ -112,8 +112,10 @@ class GUI():
 
     # Startet das Tug-of-War-Spiel
     def start_tugofwar(self, event=None):
-        self.fenster.destroy()  # Schließt das Hauptfenster
-        self.spiel = TugOfWarGUI()
+        #self.fenster.destroy()  # Schließt das Hauptfenster
+        self.tugofwarfenster = TugOfWarGUI(self.fenster)
+        
+        
 
     # Zeigt eine Nachricht an, wenn es einen Gewinner gibt
     def gewonnen(self, gewinner):
