@@ -2,8 +2,8 @@ from tkinter import *
 from PIL import Image, ImageTk
 
 class TugOfWarGUI:
-    def __init__(self):
-        self.tugofwarfenster = Tk()
+    def __init__(self, root):
+        self.tugofwarfenster = Toplevel(root)
         self.tugofwarfenster.attributes("-fullscreen", True)
         self.tugofwarfenster.configure(bg="khaki")
         self.screen_width = self.tugofwarfenster.winfo_screenwidth()
