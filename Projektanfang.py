@@ -132,23 +132,24 @@ class GUI():
 
     # Überprüft, ob ein Spieler gewonnen hat
     def check_winner(self):
-        for symbol in ["X", "O"]:
+        for symbol, color in [("O", "blau"), ("X", "rot")]:  # Assign "O" to "blau" and "X" to "rot"
             if self.board[0] == symbol and self.board[1] == symbol and self.board[2] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[3] == symbol and self.board[4] == symbol and self.board[5] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[6] == symbol and self.board[7] == symbol and self.board[8] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[0] == symbol and self.board[3] == symbol and self.board[6] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[1] == symbol and self.board[4] == symbol and self.board[7] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[2] == symbol and self.board[5] == symbol and self.board[8] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[0] == symbol and self.board[4] == symbol and self.board[8] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
             elif self.board[2] == symbol and self.board[4] == symbol and self.board[6] == symbol:  
-                self.gewonnen(symbol)  
+                self.gewonnen(color)  
+  
         
     def check_draw(self):
         if 0 not in self.board:  
