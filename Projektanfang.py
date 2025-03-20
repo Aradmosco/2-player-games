@@ -2,6 +2,7 @@ from tkinter import *
 import random
 from PIL import Image, ImageTk  # Für die Bildbearbeitung (PIL = Python Imaging Library)
 from tugofwarGUI import TugOfWarGUI
+from pongGui import PongGame
 
 
 class GUI():
@@ -104,10 +105,7 @@ class GUI():
 
     # Startet das Pong-Spiel
     def start_pong(self, event=None):
-        self.fenster.destroy()  # Schließt das Hauptfenster
-        self.pong = Tk()  # Erstellt ein neues Fenster für Pong
-        self.pong.attributes("-fullscreen", True)  # Setzt das Pong-Fenster auf Vollbild
-        self.pong.configure(bg="khaki")  # Setzt den Hintergrund
+        self.pong = PongGame(self.fenster)
         
 
     # Startet das Tug-of-War-Spiel
