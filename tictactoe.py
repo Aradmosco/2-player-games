@@ -2,8 +2,9 @@ from tkinter import *
 from PIL import Image, ImageTk
 
 class TicTacToeGame:
-    def __init__(self, root):
-        self.tictactoe = Toplevel(root)  
+    def __init__(self, main_app):
+        self.main_app = main_app
+        self.tictactoe = Toplevel(main_app.fenstermain)  
         self.tictactoe.attributes("-fullscreen", True)  
         self.tictactoe.configure(bg="khaki")  
 
@@ -189,6 +190,15 @@ class TicTacToeGame:
             Button(winner_window, text="Return to Main Screen", font=("Comic Sans MS", 30),fg="green4", bg="khaki", command=lambda: self.return_to_main(winner_window)).pack(pady=20)
 
     def gewonnen(self, gewinner):
+        if gewinner == "blau":
+            self.main_app.score_blue += 1  # Update blue score in main
+        else:
+            self.main_app.score_red += 1  # Update red score in main    
+
+        # Update the label in the main screen
+        self.main_app.score_label.config(text=f"Blau: {self.main_app.score_blue} | Rot: {self.main_app.score_red}")
+        
+        
         winner_window = Toplevel(self.tictactoe)  # Erstellt ein neues Fenster für den Gewinner
         winner_window.attributes("-fullscreen", True)
         winner_window.configure(bg="khaki")
