@@ -2,9 +2,11 @@ from tkinter import *
 from PIL import Image, ImageTk
 
 class PongGame:
-    def __init__(self, root):
+    def __init__(self, main_app):
+        
+        self.main_app = main_app
+        self.fenster = Toplevel(main_app.fenstermain)
         # Create the main game window in fullscreen mode
-        self.fenster = Toplevel(root)
         self.fenster.attributes("-fullscreen", True)
         self.fenster.configure(bg="green")
 
@@ -138,6 +140,14 @@ class PongGame:
         self.ball_dy = 10
 
     def display_winner(self, gewinner):
+        if gewinner == "blau":
+            self.main_app.score_blue += 1  # Update blue score in main
+        else:
+            self.main_app.score_red += 1  # Update red score in main    
+
+        # Update the label in the main screen
+        self.main_app.score_label.config(text=f"Blau: {self.main_app.score_blue} | Rot: {self.main_app.score_red}")
+        
         """Displays a winner message and provides an option to return to the main screen."""
         if hasattr(self, "winner_window") and self.winner_window.winfo_exists():
             return
@@ -161,4 +171,3 @@ class PongGame:
 # Run Pong if script is executed directly
 if __name__ == "__main__":
     PongGame()
-
